@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">first_project</string>
+    <string name="asdf">some</string>
+    <string name="wahab_ali">Wahab Ali</string>
+    <string name="gr">GR</string>
+    <string name="clas">Class</string>
+    <string name="section">Section</string>
 </resources>
