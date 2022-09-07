@@ -5,126 +5,236 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.DetailActivity">
+    tools:context=".ui.DetailActivity"
+    android:background="#E8E8EC"
+
+    android:padding="10dp"
+    >
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+
+        >
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:paddingLeft="10dp"
+          android:paddingTop="10dp"
+          android:paddingBottom="15dp"
+          >
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingHorizontal="10dp"
+              android:paddingBottom="10dp"
+
+              >
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/name" android:layout_weight="1"/>
+              <TextView
+                  android:id="@+id/dname"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Ali"
+                  android:layout_weight="1"
+                  android:textStyle="bold"
+                  android:textColor="@color/black"
+                  />
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingHorizontal="10dp"
+              android:paddingBottom="10dp"
+              >
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/father_name" android:layout_weight="1"/>
+              <TextView
+                  android:id="@+id/dfather"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Ali"
+                  android:layout_weight="1"
+                  android:textStyle="bold"
+                  android:textColor="@color/black"
+
+
+                  />
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingHorizontal="10dp"
+              android:paddingBottom="10dp"
+              >
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/year" android:layout_weight="1"/>
+              <TextView
+                  android:id="@+id/dyear"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Ali"
+                  android:layout_weight="1"
+                  android:textStyle="bold"
+                  android:textColor="@color/black"
+
+
+                  />
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingHorizontal="10dp"
+              android:paddingBottom="10dp"
+              >
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/grade" android:layout_weight="1"/>
+              <TextView
+                  android:id="@+id/dgrade"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Ali"
+                  android:layout_weight="1"
+                  android:textStyle="bold"
+                  android:textColor="@color/black"
+
+
+                  />
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingHorizontal="10dp"
+              android:paddingBottom="10dp"
+              >
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/sectiont" android:layout_weight="1"/>
+              <TextView
+                  android:id="@+id/dsection"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Ali"
+                  android:layout_weight="1"
+                  android:textStyle="bold"
+                  android:textColor="@color/black"
+
+
+                  />
+
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingHorizontal="10dp"
+              android:paddingBottom="10dp"
+              >
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="@string/grt" android:layout_weight="1"/>
+              <TextView
+                  android:id="@+id/dgr"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Ali"
+                  android:layout_weight="1"
+                  android:textStyle="bold"
+                  android:textColor="@color/black"
+
+
+                  />
+
+          </LinearLayout>
+
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.cardview.widget.CardView>
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="10dp"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
+        android:orientation="vertical"
         android:paddingBottom="10dp"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name : " android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/dname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ali"
-            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:text="@string/attendance"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
             />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="10dp"
-        >
-        <TextView
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Father Name : " android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/dfather"
+            android:padding="10dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="#063029">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+
+                android:text="@string/month"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginEnd="30dp"
+
+                android:text="@string/attendance_ti"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ali"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="10dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Year : " android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/dyear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ali"
-            android:layout_weight="1"
-            />
+            android:id="@+id/table_rc"
+            android:overScrollMode="never"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="10dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Grade : " android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/dgrade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ali"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="10dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Section : " android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/dsection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ali"
-            android:layout_weight="1"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp"
-        android:paddingBottom="10dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GR : " android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/dgr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ali"
-            android:layout_weight="1"
-            />
-
-    </LinearLayout>
+</androidx.cardview.widget.CardView>
 
 
 

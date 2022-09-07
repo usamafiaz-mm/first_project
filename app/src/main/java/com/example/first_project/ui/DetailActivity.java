@@ -5,10 +5,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.first_project.data.Constant;
 import com.example.first_project.R;
 import com.example.first_project.model.Student;
+import com.example.first_project.ui.adapters.StudentAdapter;
+import com.example.first_project.ui.adapters.TableItemAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         int gr = getIntent().getExtras().getInt("gr");
         View parentLayout = findViewById(android.R.id.content);
 
-        Snackbar.make(parentLayout, String.valueOf(gr), Snackbar.LENGTH_LONG).show();
+//        Snackbar.make(parentLayout, String.valueOf(gr), Snackbar.LENGTH_LONG).show();
 
         ArrayList students = new Constant().STUDENTS;
         Student student = new Student();
@@ -56,9 +60,18 @@ public class DetailActivity extends AppCompatActivity {
             father.setText(student.getFather());
             year.setText(student.getYear());
             section.setText(student.getSection());
-            grade.setText(student.getYear());
+            grade.setText(student.getGrade());
             grv.setText(String.valueOf(student.getGr()));
             this.getSupportActionBar().setTitle(student.getName());
+
+
+
+            ArrayList tableItems = new Constant().TABLE_ITEMS;
+            TableItemAdapter adapter = new TableItemAdapter(tableItems);
+            RecyclerView recyclerView = findViewById(R.id.table_rc);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
         }
 
     }

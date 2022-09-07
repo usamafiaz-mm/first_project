@@ -5,4 +5,13 @@
     <string name="gr">GR</string>
     <string name="clas">Class</string>
     <string name="section">Section</string>
+    <string name="name">Student Name :</string>
+    <string name="father_name">Father Name :</string>
+    <string name="year">Year :</string>
+    <string name="grade">Grade :</string>
+    <string name="sectiont">Section :</string>
+    <string name="grt">GR :</string>
+    <string name="attendance">Attendance</string>
+    <string name="attendance_ti">Attendance</string>
+    <string name="month">Month</string>
 </resources>
