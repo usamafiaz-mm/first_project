@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,11 +17,6 @@
         android:theme="@style/Theme.First_project"
         tools:targetApi="31">
         <activity
-            android:name=".ui.DetailActivity"
-            android:exported="false"
-
-            android:parentActivityName=".ui.MainActivity"/>
-        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -29,6 +25,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.DetailActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.ListingActivity" />
+        <activity
+            android:name=".ui.ListingActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.InterceptorActivity"
+            android:parentActivityName=".ui.MainActivity"
+            >
+
+        </activity>
+        <activity android:name=".ui.TimeOutActivity"
+            android:parentActivityName=".ui.MainActivity"></activity>
+
     </application>
 
 </manifest>
