@@ -4,7 +4,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Api {
+public class QuoteAPI {
 
     public static QuoteInterface getClient() {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new HeaderInterceptor()).build();

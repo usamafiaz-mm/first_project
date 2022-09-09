@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.example.first_project.R;
 import com.example.first_project.model.Quote;
-import com.example.first_project.network_service.Api;
+import com.example.first_project.network_service.QuoteAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +25,7 @@ public class InterceptorActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Api.getClient().getResults().enqueue(new Callback<Quote>() {
+                QuoteAPI.getClient().getResults().enqueue(new Callback<Quote>() {
                     @Override
                     public void onResponse(Call<Quote> call, Response<Quote> response) {
                         System.out.println(" in on response \n\n\n" +  response.headers());
