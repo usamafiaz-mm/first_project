@@ -14,4 +14,8 @@
     <string name="attendance">Attendance</string>
     <string name="attendance_ti">Attendance</string>
     <string name="month">Month</string>
+    <string name="listing_demo">Listing Demo</string>
+    <string name="listing_demo_button">Listing Demo</string>
+    <string name="interceptor_demo">Interceptor Demo</string>
+    <string name="timeout_demo">Timeout Demo</string>
 </resources>

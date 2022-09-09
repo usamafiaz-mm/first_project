@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.first_project.R;
 
 public class MainActivity extends AppCompatActivity {
-    Button timeOutButton, interceptButton,uiButton;
+    Button timeOutButton, interceptButton,uiButton, postReqButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         timeOutButton = findViewById(R.id.toBtn);
         interceptButton = findViewById(R.id.interceptBtn);
         uiButton = findViewById(R.id.UIBtn);
+        postReqButton = findViewById(R.id.postReqDemo);
+
 
         timeOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ListingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        postReqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PostReqDemoActivity.class);
                 startActivity(intent);
             }
         });

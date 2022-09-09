@@ -12,14 +12,14 @@
         android:id="@+id/toBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Timeout Demo"
+        android:text="@string/timeout_demo"
         android:layout_gravity="center"
         />
     <Button
         android:id="@+id/interceptBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Interceptor Demo"
+        android:text="@string/interceptor_demo"
         android:layout_gravity="center"
         />
 
@@ -27,7 +27,14 @@
         android:id="@+id/UIBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Listing Demo"
+        android:text="@string/listing_demo_button"
+        android:layout_gravity="center"
+        />
+    <Button
+        android:id="@+id/postReqDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post User Demo"
         android:layout_gravity="center"
         />
 
