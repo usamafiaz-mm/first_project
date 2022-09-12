@@ -18,4 +18,5 @@
     <string name="listing_demo_button">Listing Demo</string>
     <string name="interceptor_demo">Interceptor Demo</string>
     <string name="timeout_demo">Timeout Demo</string>
+    <string name="back_to_screen_1">Back to screen 1</string>
 </resources>

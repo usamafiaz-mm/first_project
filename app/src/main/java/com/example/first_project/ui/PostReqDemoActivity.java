@@ -6,13 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.first_project.R;
 import com.example.first_project.model.PostResponse;
-import com.example.first_project.network_service.PostUserAPI;
-
-import org.json.JSONObject;
+import com.example.first_project.network_service.FlaskAPIPost;
+import com.example.first_project.network_service.OnCreateAPI;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +83,8 @@ public class PostReqDemoActivity extends AppCompatActivity {
 //                            });
 //
 //                    queue.add(jsonObjectRequest);
-                    PostUserAPI.getClient().login(name,email,password).enqueue(new Callback<PostResponse>() {
+
+                    FlaskAPIPost.getClient().login(name,email,password).enqueue(new Callback<PostResponse>() {
                         @Override
                         public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                             System.out.println("Header " + response.headers());

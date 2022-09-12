@@ -37,6 +37,13 @@
         android:text="Post User Demo"
         android:layout_gravity="center"
         />
+    <Button
+        android:id="@+id/getDemoFlask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Demo"
+        android:layout_gravity="center"
+        />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
