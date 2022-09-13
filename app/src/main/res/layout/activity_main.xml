@@ -45,5 +45,14 @@
         android:layout_gravity="center"
         />
 
+    <Button
+        android:id="@+id/localDbDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local DB  Demo"
+        android:layout_gravity="center"
+        />
+
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

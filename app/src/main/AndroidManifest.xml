@@ -17,15 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.LocalDbDemoAcitivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.GetDemoScreen2"
             android:exported="false"
-            android:parentActivityName=".ui.GetDemoScreen1"/>
+            android:parentActivityName=".ui.GetDemoScreen1" />
         <activity
             android:name=".ui.GetDemoScreen1"
             android:exported="false"
-            android:parentActivityName=".ui.MainActivity"
             android:launchMode="singleTop"
-            />
+            android:parentActivityName=".ui.MainActivity" />
         <activity
             android:name=".ui.PostReqDemoActivity"
             android:exported="false"
