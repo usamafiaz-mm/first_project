@@ -12,9 +12,11 @@
         <entry key="..\:/first_project/app/src/main/res/layout/activity_get_demo_screen2.xml" value="0.1796875" />
         <entry key="..\:/first_project/app/src/main/res/layout/activity_interceptor.xml" value="0.1796875" />
         <entry key="..\:/first_project/app/src/main/res/layout/activity_local_db_demo_acitivity.xml" value="0.22" />
+        <entry key="..\:/first_project/app/src/main/res/layout/activity_local_dbfetch.xml" value="0.1796875" />
         <entry key="..\:/first_project/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/first_project/app/src/main/res/layout/activity_post_req_demo.xml" value="0.1" />
         <entry key="..\:/first_project/app/src/main/res/layout/timeout_activity.xml" value="0.1796875" />
+        <entry key="..\:/first_project/app/src/main/res/layout/user_item.xml" value="0.22" />
       </map>
     </option>
   </component>

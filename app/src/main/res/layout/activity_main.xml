@@ -46,10 +46,25 @@
         />
 
     <Button
-        android:id="@+id/localDbDemo"
+        android:id="@+id/localDbDemoInsert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Local DB  Demo"
+        android:text="Local DB insert Demo"
+        android:layout_gravity="center"
+        />
+    <Button
+        android:id="@+id/localDbDemoFetch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local DB Fetch Demo"
+        android:layout_gravity="center"
+        />
+
+    <Button
+        android:id="@+id/notesApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notes App"
         android:layout_gravity="center"
         />
 

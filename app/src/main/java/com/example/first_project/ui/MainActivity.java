@@ -7,10 +7,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.first_project.LocalDBFetchActivity;
 import com.example.first_project.R;
 
 public class MainActivity extends AppCompatActivity {
-    Button timeOutButton, interceptButton,uiButton, postReqButton,getDemoButton,localDbDemo;
+    Button timeOutButton, interceptButton,uiButton, postReqButton,getDemoButton, localDbDemoInsert,localDbDemoFetch, notesButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
         uiButton = findViewById(R.id.UIBtn);
         postReqButton = findViewById(R.id.postReqDemo);
         getDemoButton = findViewById(R.id.getDemoFlask);
-        localDbDemo = findViewById(R.id.localDbDemo);
+        localDbDemoInsert = findViewById(R.id.localDbDemoInsert);
+        localDbDemoFetch = findViewById(R.id.localDbDemoFetch);
 
 
         timeOutButton.setOnClickListener(new View.OnClickListener() {
@@ -62,12 +64,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    localDbDemo.setOnClickListener(new View.OnClickListener() {
+    localDbDemoInsert.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this, LocalDbDemoAcitivity.class);
             startActivity(intent);
         }
     });
+
+    localDbDemoFetch.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, LocalDBFetchActivity.class);
+            startActivity(intent);
+        }
+    });
+
     }
 }
