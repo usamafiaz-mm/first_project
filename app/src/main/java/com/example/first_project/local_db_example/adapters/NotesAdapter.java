@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.first_project.R;
 import com.example.first_project.local_db_example.database.DatabaseClient;
+import com.example.first_project.local_db_example.interfaces.OnItemClickListener;
 import com.example.first_project.local_db_example.model.NotesModel;
 
 import java.text.DateFormat;
@@ -24,9 +25,12 @@ import java.util.concurrent.Executors;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     List<NotesModel> notesModelList;
+    private final OnItemClickListener listener;
 
-    public NotesAdapter(List notesModelList) {
+
+    public NotesAdapter(List notesModelList, OnItemClickListener listener) {
         this.notesModelList = notesModelList;
+        this.listener = listener;
     }
 
 
@@ -56,6 +60,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             formattedDate = obj.format(res).toString();
         }
         holder.dateEdt.setText(formattedDate);
+        holder.bind(notesModelList.get(position), listener);
 
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +98,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
         });
     }
 
+
+
     @Override
     public int getItemCount() {
         return notesModelList.size();
@@ -110,5 +117,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             deleteButton = itemView.findViewById(R.id.delete_content);
             dateEdt = itemView.findViewById(R.id.note_date);
         }
+
+
+        public void bind(final NotesModel item, final OnItemClickListener listener) {
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
+        }
+
+
     }
 }

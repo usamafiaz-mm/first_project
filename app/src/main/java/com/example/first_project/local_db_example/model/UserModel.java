@@ -12,13 +12,15 @@ import java.util.UUID;
 
 @Entity(tableName = "user_table")
 public class UserModel {
-    @PrimaryKey()
+
     @NonNull
+    @ColumnInfo(name = "id")
     private String id;
 
     @ColumnInfo(name = "name")
     private String name;
 
+    @PrimaryKey()
     @ColumnInfo(name = "email")
     private String email;
 
@@ -38,7 +40,7 @@ public class UserModel {
     }
 
     public UserModel(){
-        id = UUID.randomUUID().toString();
+
         createdOn = System.currentTimeMillis();
 
 

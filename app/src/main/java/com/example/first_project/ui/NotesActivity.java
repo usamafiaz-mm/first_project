@@ -16,8 +16,8 @@ import android.widget.Toast;
 import com.example.first_project.R;
 import com.example.first_project.local_db_example.adapters.EmptyAdapter;
 import com.example.first_project.local_db_example.adapters.NotesAdapter;
-import com.example.first_project.local_db_example.adapters.UserAdapter;
 import com.example.first_project.local_db_example.database.DatabaseClient;
+import com.example.first_project.local_db_example.interfaces.OnItemClickListener;
 import com.example.first_project.local_db_example.model.NotesModel;
 
 import java.util.List;
@@ -26,6 +26,8 @@ import java.util.concurrent.Executors;
 public class NotesActivity extends AppCompatActivity {
     Button saveBtn, clearBtn;
     EditText contentEdt;
+    boolean updateSwitch = false;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,46 +48,77 @@ public class NotesActivity extends AppCompatActivity {
 //
 
 
-                NotesAdapter notesAdapter = new NotesAdapter(notesModels);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(notesAdapter);
-                recyclerView.setOnClickListener(new View.OnClickListener() {
+                NotesAdapter notesAdapter = new NotesAdapter(notesModels, new OnItemClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        System.out.println("CLICKED");
+                    public void onItemClick(NotesModel item) {
+                        String content = item.getContent();
+                        contentEdt.setText("");
+                        contentEdt.setText(content);
+                        updateSwitch = true;
+                        id = item.getId();
+
+
                     }
                 });
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setAdapter(notesAdapter);
 
 
             }
         });
 
 
-
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String content = contentEdt.getText().toString().trim();
-                if (content.isEmpty()) {
-                    contentEdt.setError("Content Field cant be empty!!!");
-                    return;
+
+                if (updateSwitch) {
+
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            NotesModel notesModel = new  NotesModel( content, System.currentTimeMillis());
+                            notesModel.setId(id);
+
+                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().update(notesModel);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    contentEdt.setText("");
+                                    Toast.makeText(NotesActivity.this, "Updated", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            return;
+                        }
+                    });
+
                 }
 
-                Executors.newSingleThreadExecutor().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().insert(new NotesModel(content, System.currentTimeMillis()));
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                contentEdt.setText("");
-                                Toast.makeText(NotesActivity.this, "Added to Database", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                else {
 
+
+                    if (content.isEmpty()) {
+                        contentEdt.setError("Content Field cant be empty!!!");
+                        return;
                     }
-                });
+
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().insert(new NotesModel(content, System.currentTimeMillis()));
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    contentEdt.setText("");
+                                    Toast.makeText(NotesActivity.this, "Added to Database", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
+                        }
+                    });
+                }
             }
         });
 
@@ -118,9 +151,6 @@ public class NotesActivity extends AppCompatActivity {
                         .setIcon(R.drawable.ic_baseline_warning_24);
                 AlertDialog alert = builder.create();
                 alert.show();
-
-
-
 
 
             }

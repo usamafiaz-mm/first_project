@@ -19,6 +19,10 @@ public class NotesModel {
     @ColumnInfo(name = "created")
     private long   createdOn=0;
 
+
+    @ColumnInfo(name="user")
+    private  String user;
+
     public long getCreatedOn() {
         return createdOn;
     }
