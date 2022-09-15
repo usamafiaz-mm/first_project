@@ -16,6 +16,22 @@ public class NotesModel {
     @ColumnInfo(name = "content")
     private String content;
 
+    @ColumnInfo(name = "created")
+    private long   createdOn=0;
+
+    public long getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(long createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public NotesModel(String content,long createdOn) {
+        this.content = content;
+        this.createdOn = createdOn;
+    }
+
     public int getId() {
         return id;
     }

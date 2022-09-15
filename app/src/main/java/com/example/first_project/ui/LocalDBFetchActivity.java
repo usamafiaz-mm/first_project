@@ -1,4 +1,4 @@
-package com.example.first_project;
+package com.example.first_project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,13 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.example.first_project.data.Constant;
+import com.example.first_project.R;
 import com.example.first_project.local_db_example.adapters.EmptyAdapter;
 import com.example.first_project.local_db_example.adapters.UserAdapter;
 import com.example.first_project.local_db_example.database.DatabaseClient;
-import com.example.first_project.ui.adapters.StudentAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 

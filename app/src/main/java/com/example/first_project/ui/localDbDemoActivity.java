@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocalDbDemoAcitivity extends AppCompatActivity {
+public class localDbDemoActivity extends AppCompatActivity {
     Button btnLogin;
     EditText edtPassword, edtEmail;
     String email, password;
@@ -67,7 +67,7 @@ public class LocalDbDemoAcitivity extends AppCompatActivity {
                                 System.out.println("Dismissing Dialog 1");
                                 bar.setVisibility(View.GONE);
 
-                                new AlertDialog.Builder(LocalDbDemoAcitivity.this).setTitle("TIME OUT").setMessage(st.getMessage()).show();
+                                new AlertDialog.Builder(localDbDemoActivity.this).setTitle("TIME OUT").setMessage(st.getMessage()).show();
                             });
 
                             return null;
@@ -95,7 +95,7 @@ public class LocalDbDemoAcitivity extends AppCompatActivity {
                                 btnLogin.setVisibility(View.VISIBLE);
                             });
 
-                            Toast.makeText(LocalDbDemoAcitivity.this, "Data is null", Toast.LENGTH_LONG).show();
+                            Toast.makeText(localDbDemoActivity.this, "Data is null", Toast.LENGTH_LONG).show();
                         } else {
                             insertDataToDB(data);
 

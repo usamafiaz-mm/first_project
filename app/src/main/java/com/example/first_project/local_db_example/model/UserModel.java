@@ -28,6 +28,7 @@ public class UserModel {
     @ColumnInfo(name = "createdOn")
     private long   createdOn;
 
+
     public long getCreatedOn() {
         return createdOn;
     }
