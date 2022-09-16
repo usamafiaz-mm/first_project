@@ -20,6 +20,8 @@ public class UserModel {
     @ColumnInfo(name = "name")
     private String name;
 
+    @NonNull
+
     @PrimaryKey()
     @ColumnInfo(name = "email")
     private String email;

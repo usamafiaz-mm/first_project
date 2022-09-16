@@ -19,13 +19,13 @@
         <activity
             android:name=".ui.NotesActivity"
             android:exported="false"
-            android:parentActivityName=".ui.MainActivity"/>
+            android:parentActivityName=".ui.LoginActivity"/>
         <activity
             android:name=".ui.LocalDBFetchActivity"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name=".ui.localDbDemoActivity"
+            android:name=".ui.LoginActivity"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity" />
         <activity

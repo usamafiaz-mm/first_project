@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "711c10b4462332b84d9d8b9740dbed7c",
+    "identityHash": "4772e555a09b891ca25c26e1e883e9f1",
     "entities": [
       {
         "tableName": "user_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `email` TEXT, `data` TEXT, `createdOn` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT, `email` TEXT NOT NULL, `data` TEXT, `createdOn` INTEGER NOT NULL, PRIMARY KEY(`email`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -24,7 +24,7 @@
             "fieldPath": "email",
             "columnName": "email",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "data",
@@ -41,7 +41,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "email"
           ],
           "autoGenerate": false
         },
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "notes",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `content` TEXT, `created` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `content` TEXT, `created` INTEGER NOT NULL, `user` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -69,6 +69,12 @@
             "columnName": "created",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "user",
+            "columnName": "user",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -84,7 +90,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '711c10b4462332b84d9d8b9740dbed7c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4772e555a09b891ca25c26e1e883e9f1')"
     ]
   }
 }

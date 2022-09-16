@@ -23,6 +23,14 @@ public class NotesModel {
     @ColumnInfo(name="user")
     private  String user;
 
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
     public long getCreatedOn() {
         return createdOn;
     }

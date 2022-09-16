@@ -6,11 +6,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.first_project.R;
@@ -18,16 +27,50 @@ import com.example.first_project.local_db_example.adapters.EmptyAdapter;
 import com.example.first_project.local_db_example.adapters.NotesAdapter;
 import com.example.first_project.local_db_example.database.DatabaseClient;
 import com.example.first_project.local_db_example.interfaces.OnItemClickListener;
+import com.example.first_project.local_db_example.model.NoteTuple;
 import com.example.first_project.local_db_example.model.NotesModel;
 
 import java.util.List;
 import java.util.concurrent.Executors;
 
-public class NotesActivity extends AppCompatActivity {
+public class NotesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     Button saveBtn, clearBtn;
     EditText contentEdt;
     boolean updateSwitch = false;
-    int id;
+    int userId;
+    Switch aSwitch;
+    RecyclerView recyclerView;
+    TextView sizeTv;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.log_out, menu);
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout) {
+
+
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    SharedPreferences prefs = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                    prefs.edit().clear().commit();
+                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().userDao().clearTable();
+                    finish();
+                }
+            });
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,36 +79,66 @@ public class NotesActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.saveNote);
         clearBtn = findViewById(R.id.clearNote);
         contentEdt = findViewById(R.id.contentEt);
+        aSwitch = findViewById(R.id.switchForActionBar);
+        sizeTv = findViewById(R.id.size);
 
 
-        RecyclerView recyclerView = findViewById(R.id.notes_rc);
+        recyclerView = findViewById(R.id.notes_rc);
         EmptyAdapter emptyAdapter = new EmptyAdapter();
         recyclerView.setAdapter(emptyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(NotesActivity.this));
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().fetchAll().observe(NotesActivity.this, new Observer<List<NotesModel>>() {
-            @Override
-            public void onChanged(List<NotesModel> notesModels) {
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.string_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+
+
+//        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().fetchAll().observe(NotesActivity.this, new Observer<List<NoteTuple>>() {
+//            @Override
+//            public void onChanged(List<NoteTuple> noteTuples) {
+////
 //
+//
+//                NotesAdapter notesAdapter = new NotesAdapter(noteTuples, new OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(NoteTuple item) {
+//                        String content = item.getContent();
+//                        contentEdt.setText("");
+//                        contentEdt.setText(content);
+//                        updateSwitch = true;
+//                        userId = item.getId();
+//                    }
+//
+//
+//                });
+//                recyclerView.setHasFixedSize(true);
+//                recyclerView.setAdapter(notesAdapter);
+//
+//
+//            }
+//        });
 
 
-                NotesAdapter notesAdapter = new NotesAdapter(notesModels, new OnItemClickListener() {
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().getSize().observe(NotesActivity.this, new Observer<Integer>() {
                     @Override
-                    public void onItemClick(NotesModel item) {
-                        String content = item.getContent();
-                        contentEdt.setText("");
-                        contentEdt.setText(content);
-                        updateSwitch = true;
-                        id = item.getId();
-
+                    public void onChanged(Integer integer) {
+                        System.out.println(integer);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                sizeTv.setText(String.valueOf(integer));
+                            }
+                        });
 
                     }
                 });
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setAdapter(notesAdapter);
-
-
-            }
-        });
 
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +152,15 @@ public class NotesActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            NotesModel notesModel = new  NotesModel( content, System.currentTimeMillis());
-                            notesModel.setId(id);
-
+                            NotesModel notesModel = new NotesModel(content, System.currentTimeMillis());
+                            notesModel.setId(userId);
+                            SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                            String email = preferences.getString("email", "");
+                            notesModel.setUser(email);
                             DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().update(notesModel);
+
+                            updateSwitch = false;
+                            userId =-1;
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -94,9 +172,7 @@ public class NotesActivity extends AppCompatActivity {
                         }
                     });
 
-                }
-
-                else {
+                } else {
 
 
                     if (content.isEmpty()) {
@@ -107,7 +183,13 @@ public class NotesActivity extends AppCompatActivity {
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
                         public void run() {
-                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().insert(new NotesModel(content, System.currentTimeMillis()));
+
+                            SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                            String email = preferences.getString("email", "");
+                            NotesModel note = new NotesModel(content, System.currentTimeMillis());
+                            note.setUser(email);
+
+                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().insert(note);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -155,5 +237,82 @@ public class NotesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+
+        switch (pos){
+            case 0:
+                System.out.println("Show All");
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().fetchAll().observe(NotesActivity.this, new Observer<List<NoteTuple>>() {
+                    @Override
+                    public void onChanged(List<NoteTuple> noteTuples) {
+                        System.out.println(noteTuples);
+//
+
+
+                        NotesAdapter notesAdapter = new NotesAdapter(noteTuples, new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(NoteTuple item) {
+                                String content = item.getContent();
+                                contentEdt.setText("");
+                                contentEdt.setText(content);
+                                updateSwitch = true;
+                                userId = item.getId();
+                            }
+
+
+                        });
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setAdapter(notesAdapter);
+
+
+                    }
+                });
+                break;
+            case 1:
+                System.out.println("Show only mine");
+
+
+                SharedPreferences preferences = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                String email = preferences.getString("email", "");
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().notesDao().fetchOnlyMine(email).observe(NotesActivity.this, new Observer<List<NoteTuple>>() {
+                    @Override
+                    public void onChanged(List<NoteTuple> noteTuples) {
+//
+
+
+                        NotesAdapter notesAdapter = new NotesAdapter(noteTuples, new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(NoteTuple item) {
+                                String content = item.getContent();
+                                contentEdt.setText("");
+                                contentEdt.setText(content);
+                                updateSwitch = true;
+                                userId = item.getId();
+                            }
+
+
+                        });
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setAdapter(notesAdapter);
+
+
+                    }
+                });
+
+
+                break;
+
+        }
+
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 }

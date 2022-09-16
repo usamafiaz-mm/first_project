@@ -15,4 +15,9 @@ public interface UserDao {
 
     @Query("SELECT * FROM user_table")
     List<UserModel> fetchAll();
+
+
+
+    @Query("DELETE FROM user_table")
+    void clearTable();
 }

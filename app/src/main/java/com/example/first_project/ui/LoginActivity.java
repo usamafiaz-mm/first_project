@@ -1,5 +1,8 @@
 package com.example.first_project.ui;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class localDbDemoActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     EditText edtPassword, edtEmail;
     String email, password;
@@ -67,7 +70,7 @@ public class localDbDemoActivity extends AppCompatActivity {
                                 System.out.println("Dismissing Dialog 1");
                                 bar.setVisibility(View.GONE);
 
-                                new AlertDialog.Builder(localDbDemoActivity.this).setTitle("TIME OUT").setMessage(st.getMessage()).show();
+                                new AlertDialog.Builder(LoginActivity.this).setTitle("TIME OUT").setMessage(st.getMessage()).show();
                             });
 
                             return null;
@@ -93,9 +96,10 @@ public class localDbDemoActivity extends AppCompatActivity {
                             runOnUiThread(() -> {
                                 bar.setVisibility(View.GONE);
                                 btnLogin.setVisibility(View.VISIBLE);
+                                Toast.makeText(LoginActivity.this, "Data is null", Toast.LENGTH_LONG).show();
+
                             });
 
-                            Toast.makeText(localDbDemoActivity.this, "Data is null", Toast.LENGTH_LONG).show();
                         } else {
                             insertDataToDB(data);
 
@@ -148,12 +152,34 @@ public class localDbDemoActivity extends AppCompatActivity {
             UserModel userModel = new UserModel();
             userModel.setName(data.get("name"));
             userModel.setEmail(data.get("email"));
+            userModel.setId(data.get("email"));
 
             userModel.setData(data.get("data"));
             System.err.println("INSERTING DATA TO DB");
-            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
-                    .userDao()
-                    .insert(userModel);
+            try {
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .userDao()
+                        .insert(userModel);
+                SharedPreferences user_data = getSharedPreferences("user_data", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = user_data.edit();
+                editor.putString("email", userModel.getEmail());
+                editor.putString("name", userModel.getName());
+                editor.commit();
+                System.out.println(user_data.getString("email", ""));
+                System.out.println(user_data.getString("name", ""));
+                Intent intent = new Intent(LoginActivity.this, NotesActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(LoginActivity.this, "User Already exists", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+            }
+
+
             System.out.println("Dismissing Dialog 4");
 
             runOnUiThread(() -> {
@@ -164,6 +190,7 @@ public class localDbDemoActivity extends AppCompatActivity {
 
 
     }
+
 
     private Boolean validateData() {
         System.err.println("VALIDATING DATA");

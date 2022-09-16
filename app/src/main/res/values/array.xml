@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="string_array">
+        <item>Show All</item>
+        <item>Only Mine</item>
+
+    </string-array>
+</resources>

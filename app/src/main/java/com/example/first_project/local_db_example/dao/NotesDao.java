@@ -8,6 +8,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.first_project.local_db_example.model.NoteTuple;
 import com.example.first_project.local_db_example.model.NotesModel;
 import com.example.first_project.local_db_example.model.UserModel;
 
@@ -24,8 +25,8 @@ public interface NotesDao {
     void delete(NotesModel notes);
 
 
-    @Query("SELECT * FROM notes order by created")
-    LiveData<List<NotesModel>> fetchAll();
+    @Query("SELECT user_table.name , content, created,notes.id,user  FROM notes LEFT JOIN  user_table ON user_table.id = notes.user order by created;")
+    LiveData<List<NoteTuple>> fetchAll();
 
 
     @Query("DELETE FROM notes")
@@ -36,4 +37,17 @@ public interface NotesDao {
 
     @Update
     void update(NotesModel notesModel);
+
+//    @Query("SELECT user_table.name , content, created,notes.id,user  FROM notes,user_table WHERE user_table.id = notes.user AND :id = notes.user  order by created")
+//    LiveData<List<NoteTuple>> fetchOnlyMine(String id);
+
+
+    @Query("SELECT user_table.name , content, created,notes.id,user  FROM notes INNER JOIN user_table ON user_table.id = notes.user WHERE  :id = notes.user  order by created")
+    LiveData<List<NoteTuple>> fetchOnlyMine(String id);
+
+
+
+    @Query("SELECT COUNT (*) from notes")
+    LiveData<Integer> getSize();
+
 }

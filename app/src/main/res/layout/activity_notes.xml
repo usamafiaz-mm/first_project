@@ -9,13 +9,38 @@
     android:weightSum="1"
 
     >
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+
+       <Spinner
+           android:id="@+id/spinner"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:padding="5dp"
+           android:layout_margin="10dp"
+           android:layout_weight=".5"
+           />
+       <TextView
+           android:layout_weight=".3"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/size"
+           android:textSize="18dp"
+           android:text="Size"
+           />
+
+   </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".8"
+        android:layout_weight=".9"
         android:layout_marginHorizontal="10dp"
         android:id="@+id/notes_rc"
+        android:layout_marginTop="10dp"
         >
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -26,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="5dp"
-        android:layout_weight=".1"
+        android:layout_weight="0.0003"
         android:gravity="top|start"
         android:hint="Please enter your note content"
         android:inputType="textMultiLine"

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         localDbDemoInsert = findViewById(R.id.localDbDemoInsert);
         localDbDemoFetch = findViewById(R.id.localDbDemoFetch);
         notesButton = findViewById(R.id.notesApp);
+
+
+
+
+
 
         timeOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     localDbDemoInsert.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, localDbDemoActivity.class);
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
     });

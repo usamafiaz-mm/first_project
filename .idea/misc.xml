@@ -18,8 +18,10 @@
         <entry key="..\:/first_project/app/src/main/res/layout/activity_notes.xml" value="0.22" />
         <entry key="..\:/first_project/app/src/main/res/layout/activity_post_req_demo.xml" value="0.1" />
         <entry key="..\:/first_project/app/src/main/res/layout/note_item.xml" value="0.22" />
+        <entry key="..\:/first_project/app/src/main/res/layout/switch_layout.xml" value="0.15092592592592594" />
         <entry key="..\:/first_project/app/src/main/res/layout/timeout_activity.xml" value="0.1796875" />
         <entry key="..\:/first_project/app/src/main/res/layout/user_item.xml" value="0.22" />
+        <entry key="..\:/first_project/app/src/main/res/menu/log_out.xml" value="0.22" />
       </map>
     </option>
   </component>
