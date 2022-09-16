@@ -17,9 +17,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.FormActivity"
+            android:parentActivityName=".ui.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.NotesActivity"
             android:exported="false"
-            android:parentActivityName=".ui.LoginActivity"/>
+            android:parentActivityName=".ui.LoginActivity" />
         <activity
             android:name=".ui.LocalDBFetchActivity"
             android:exported="false"

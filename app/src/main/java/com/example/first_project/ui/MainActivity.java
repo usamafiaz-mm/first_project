@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.first_project.R;
 
 public class MainActivity extends AppCompatActivity {
-    Button timeOutButton, interceptButton,uiButton, postReqButton,getDemoButton, localDbDemoInsert,localDbDemoFetch, notesButton;
+    Button timeOutButton, interceptButton,uiButton, postReqButton,getDemoButton, localDbDemoInsert,localDbDemoFetch, notesButton,
+    formDemoActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,16 @@ public class MainActivity extends AppCompatActivity {
         localDbDemoInsert = findViewById(R.id.localDbDemoInsert);
         localDbDemoFetch = findViewById(R.id.localDbDemoFetch);
         notesButton = findViewById(R.id.notesApp);
+        formDemoActivity = findViewById(R.id.formDemo);
+
+
+        formDemoActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FormActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 

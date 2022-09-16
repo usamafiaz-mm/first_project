@@ -69,5 +69,13 @@
         />
 
 
+    <Button
+        android:id="@+id/formDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Form Demo"
+        android:layout_gravity="center"
+        />
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>
