@@ -19,4 +19,15 @@
     <string name="interceptor_demo">Interceptor Demo</string>
     <string name="timeout_demo">Timeout Demo</string>
     <string name="back_to_screen_1">Back to screen 1</string>
+    <string name="title">Select Designation</string>
+
+
+
+
+    <string-array name="design">
+        <item>Student</item>
+
+        <item>Employee</item>
+
+    </string-array>
 </resources>

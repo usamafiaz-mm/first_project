@@ -7,7 +7,9 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity(tableName = "user_table")

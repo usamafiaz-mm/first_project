@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.first_project.data.Constant;
 import com.example.first_project.R;
 import com.example.first_project.model.Student;
-import com.example.first_project.ui.adapters.StudentAdapter;
 import com.example.first_project.ui.adapters.TableItemAdapter;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "4772e555a09b891ca25c26e1e883e9f1",
+    "identityHash": "58bfd900b7a2bc445d417976057b94a5",
     "entities": [
       {
         "tableName": "user_table",
@@ -85,12 +85,92 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "user_data",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `email` TEXT, `age` INTEGER NOT NULL, `cnic` TEXT, `designation` TEXT, `university` TEXT, `company` TEXT, `dob` INTEGER, `gender` TEXT, `address` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "age",
+            "columnName": "age",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cnic",
+            "columnName": "cnic",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "designation",
+            "columnName": "designation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "university",
+            "columnName": "university",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "company",
+            "columnName": "company",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dob",
+            "columnName": "dob",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4772e555a09b891ca25c26e1e883e9f1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '58bfd900b7a2bc445d417976057b94a5')"
     ]
   }
 }

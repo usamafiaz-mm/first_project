@@ -66,7 +66,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/clas"
+                    android:text="Age"
                     android:textColor="#959090"
                     android:textSize="15dp" />
 
@@ -99,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/section"
+                    android:text="cnic"
                     android:textColor="#959090"
 
                     android:textSize="15dp" />
@@ -132,7 +132,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/gr"
+                    android:text="Designation"
                     android:textColor="#959090"
                     android:textSize="15dp" />
 
