@@ -18,15 +18,28 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2021-22"
-            android:textColor="#000000"
-            android:textFontWeight="600"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="@integer/material_motion_duration_long_1"
+                android:text="2021-22"
+                android:textColor="#000000"
+                android:textFontWeight="600"
+
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/detail_iv"
+
+                android:src="@drawable/ic_baseline_more_vert_24" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/name"

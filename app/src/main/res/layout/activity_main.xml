@@ -78,4 +78,14 @@
         />
 
 
+
+    <Button
+        android:id="@+id/imageDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image Demo"
+        android:layout_gravity="center"
+        />
+
+
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/drawable/edt_bg.xml" value="0.145" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.141" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/activity_detail.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/activity_form.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/activity_image_demo.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/fragment_dialog_image_chooser.xml" value="0.1" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/image_choose_bottom_sheet.xml" value="0.21614583333333334" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/list_item.xml" value="0.2128205128205128" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/student_item.xml" value="0.25" />
+        <entry key="..\:/Users/Dell/StudioProjects/first_project/app/src/main/res/layout/user_item.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/MM/AndroidStudioProjects/first_project/app/src/main/res/layout/activity_detail.xml" value="0.22" />
         <entry key="..\:/Users/MM/AndroidStudioProjects/first_project/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/MM/AndroidStudioProjects/first_project/app/src/main/res/layout/student_item.xml" value="0.3333333333333333" />
