@@ -1,6 +1,7 @@
 package com.example.first_project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,19 +35,19 @@ public class ListingActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(emptyAdapter);
 
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
+
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().fetchALl().observe(ListingActivity.this, new Observer<List<RegData>>() {
             @Override
-            public void run() {
-                List<RegData> temp =       DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().fetchALl();
-             runOnUiThread(new Runnable() {
-                 @Override
-                 public void run() {
-                     RegDataAdapter adapter = new RegDataAdapter(temp);
+            public void onChanged(List<RegData> regData) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        RegDataAdapter adapter = new RegDataAdapter(regData);
 
 
-                     recyclerView.setAdapter(adapter);
-                 }
-             });
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
             }
         });
 

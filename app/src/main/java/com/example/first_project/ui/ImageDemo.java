@@ -57,6 +57,7 @@ public class ImageDemo extends AppCompatActivity {
                 public void onActivityResult(Boolean result) {
                     // stuff here
 
+
                 }
 
             });
@@ -317,4 +318,12 @@ if(!f.exists()){
         }
         return directory.getAbsolutePath();
     }
+
+
+
+
+
+
+
+
 }

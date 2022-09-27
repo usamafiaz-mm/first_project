@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+android:paddingVertical="20dp"
+    android:paddingHorizontal="60dp" android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select one"
+        android:layout_gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginVertical="10dp"
+
+        />
+   <Button
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Camera"
+       android:id="@+id/camera_btn"
+       />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gallery"
+        android:id="@+id/gallery_btn"
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>

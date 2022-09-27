@@ -3,21 +3,27 @@ package com.example.first_project.ui.adapters;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.first_project.R;
+import com.example.first_project.local_db_example.database.DatabaseClient;
 import com.example.first_project.local_db_example.model.RegData;
+import com.example.first_project.ui.DetailActivity;
 import com.example.first_project.ui.FormActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHolder> {
 
@@ -60,14 +66,59 @@ public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHold
         holder.grade.setText(String.valueOf(regData.getAge()));
         holder.section.setText(regData.getCnic());
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+//        holder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(view.getContext(), "click on item: " + regData.getName(), Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(view.getContext(), FormActivity.class);
+//                intent.putExtra("id", regData.getId());
+//                System.err.println(regData.getId());
+//                view.getContext().startActivity(intent);
+//            }
+//        });
+
+        holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "click on item: " + regData.getName(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(view.getContext(), FormActivity.class);
-                intent.putExtra("id", regData.getId());
-                System.err.println(regData.getId());
-                view.getContext().startActivity(intent);
+                PopupMenu popup = new PopupMenu(view.getContext(), holder.detail);
+                //inflating menu from xml resource
+                popup.inflate(R.menu.options_menu);
+                //adding click listener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.option_view:
+                                Toast.makeText(view.getContext(), "click on item: " + regData.getName(), Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                                intent.putExtra("id", regData.getId());
+                                System.err.println(regData.getId());
+                                view.getContext().startActivity(intent);
+                                return true;
+                            case R.id.option_edit:
+                                Toast.makeText(view.getContext(), "click on item: " + regData.getName(), Toast.LENGTH_LONG).show();
+                                Intent intent2 = new Intent(view.getContext(), FormActivity.class);
+                                intent2.putExtra("id", regData.getId());
+                                System.err.println(regData.getId());
+                                view.getContext().startActivity(intent2);
+                                return true;
+                            case R.id.option_delete:
+                                Executors.newSingleThreadExecutor().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        DatabaseClient.getInstance(view.getContext()).getAppDatabase().regUserDao().deleteById(regData.getId());
+                                    }
+                                });
+
+
+
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                //displaying the popup
+                popup.show();
             }
         });
     }
@@ -81,6 +132,7 @@ public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView name, year, father, grade, section, gr;
         public CardView cardView;
+        public ImageView detail;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +143,7 @@ public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHold
             this.section = itemView.findViewById(R.id.section);
             this.father = itemView.findViewById(R.id.father_name);
             this.grade = itemView.findViewById(R.id.grade);
+            detail = itemView.findViewById(R.id.detail_iv);
         }
     }
 

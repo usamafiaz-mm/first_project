@@ -37,14 +37,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Email"
-            >
+            android:hint="Email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/form_email"
                 android:layout_width="match_parent"
-                android:inputType="textEmailAddress"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,11 +59,11 @@
             app:helperTextEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:maxLength="2"
                 android:id="@+id/form_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="2" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,28 +111,6 @@
             android:minHeight="50dp"
 
             android:prompt="@string/title" />
-
-
-        <!--        <com.google.android.material.textfield.TextInputLayout-->
-        <!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_margin="10dp"-->
-        <!--            app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--            app:layout_constraintRight_toRightOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent">-->
-
-
-        <!--            <AutoCompleteTextView-->
-        <!--                android:id="@+id/autoCompleteTextView"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:inputType="none"-->
-        <!--                android:text="Choose Programming language"-->
-        <!--                />-->
-
-        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -192,10 +169,10 @@
             android:id="@+id/rgGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/radio_border"
             android:layout_marginHorizontal="10dp"
-            android:paddingHorizontal="10dp"
-            android:orientation="vertical">
+            android:background="@drawable/radio_border"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
 
             <RadioButton
                 android:id="@+id/male"
@@ -238,20 +215,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <!--        <EditText-->
-        <!--            android:id="@+id/etDOB"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="50dp"-->
-        <!--            android:background="@drawable/et_style"-->
-        <!--            android:clickable="true"-->
-        <!--            android:ems="10"-->
-        <!--            android:layout_margin="10dp"-->
-
-        <!--            android:focusable="false"-->
-        <!--            android:hint="Enter Your Date of Birth"-->
-        <!--            android:inputType="none"-->
-        <!--            android:padding="10dp" />-->
-
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -264,20 +227,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <!--            <EditText-->
-            <!--                android:id="@+id/fnum"-->
-
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:background="@drawable/et_style"-->
-            <!--                android:hint="Enter a number"-->
-            <!--                android:inputType="number"-->
-            <!--                android:padding="10dp"-->
-
-
-            <!--                />-->
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -292,33 +241,22 @@
 
                 <com.google.android.material.textfield.TextInputEditText
 
-                    android:inputType="numberDecimal"
                     android:id="@+id/fnum"
-                    android:maxLength="5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <!--            <EditText-->
-            <!--                android:id="@+id/snum"-->
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_add_24"
 
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="50dp"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:background="@drawable/et_style"-->
-            <!--                android:hint="Enter a number"-->
-            <!--                android:inputType="number"-->
-            <!--                android:padding="10dp" />-->
-<ImageView
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:layout_gravity="center"
-    android:src="@drawable/ic_baseline_add_24"
-
-    />
-
+                />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -334,29 +272,29 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/snum"
-                    android:maxLength="5"
-
-                    android:inputType="numberDecimal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
 
-<!--        <EditText-->
-<!--            android:id="@+id/rnum"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:background="@drawable/et_style"-->
-<!--            android:focusable="false"-->
-<!--            android:hint="Result"-->
-<!--            android:padding="10dp"-->
+        <!--        <EditText-->
+        <!--            android:id="@+id/rnum"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_marginTop="10dp"-->
+        <!--            android:background="@drawable/et_style"-->
+        <!--            android:focusable="false"-->
+        <!--            android:hint="Result"-->
+        <!--            android:padding="10dp"-->
 
-<!--            />-->
+        <!--            />-->
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -367,17 +305,16 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
 
-android:focusable="false"
+            android:focusable="false"
             android:hint="Result">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:focusable="false"
                 android:id="@+id/rnum"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:focusable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <com.google.android.material.divider.MaterialDivider
@@ -404,37 +341,37 @@ android:focusable="false"
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/line1"
-android:background="@drawable/edt_bg"
-android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edt_bg"
             android:hint="Line 1"
-android:textColorHighlight="@color/black"
+            android:textColorHighlight="@color/black"
 
             />
 
         <EditText
             android:id="@+id/line2"
-            android:background="@drawable/edt_bg"
-            android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edt_bg"
             android:hint="Line 2"
 
             />
 
         <EditText
             android:id="@+id/line3"
-            android:background="@drawable/edt_bg"
-            android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edt_bg"
             android:hint="Line 3"
             android:visibility="gone"
 
@@ -444,13 +381,13 @@ android:textColorHighlight="@color/black"
         <EditText
 
 
-            android:background="@drawable/edt_bg"
-            android:layout_marginHorizontal="10dp"
             android:id="@+id/line4"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/edt_bg"
             android:hint="Line 4"
             android:visibility="gone" />
 
@@ -484,14 +421,61 @@ android:textColorHighlight="@color/black"
         </LinearLayout>
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Profile Picture"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:id="@+id/profile_text"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:src="@drawable/ic_baseline_add_a_photo_24"
+
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/profile_picture"
+            android:layout_gravity="center"
+            />
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            app:dividerColor="#CBCEDC"
+
+            />
+        <TextView
+android:id="@+id/cover_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Cover Picture"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <ImageView
+            android:src="@drawable/ic_baseline_add_a_photo_24"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:id="@+id/cover_picture"
+            android:layout_gravity="center"
+            />
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="10dp"
+            app:dividerColor="#CBCEDC"
+
+            />
         <Button
             android:id="@+id/submit_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-android:layout_marginHorizontal="30dp"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
             android:backgroundTint="#6722E1"
-
             android:text="Submit" />
 
 

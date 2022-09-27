@@ -19,7 +19,7 @@ import com.example.first_project.local_db_example.model.UserModel;
 import com.example.first_project.local_db_example.util_classes.Converters;
 
 
-@Database(entities = {UserModel.class, NotesModel.class, RegData.class}, version = 2)
+@Database(entities = {UserModel.class, NotesModel.class, RegData.class}, version = 3)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -30,10 +30,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
 
-    static final Migration MIGRATION_1_2 = new Migration(1,2) {
+    static final Migration MIGRATION_1_2 = new Migration(2,3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("ALTER TABLE 'notes' ADD COLUMN 'created' INTEGER NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE 'user_data' ADD COLUMN 'profile_image' TEXT ");
+            database.execSQL("ALTER TABLE 'user_data' ADD COLUMN 'cover_image' TEXT ");
+
             Log.d("VROM","Migration");
         }
 

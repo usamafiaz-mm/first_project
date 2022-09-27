@@ -39,7 +39,7 @@
               <TextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/name" android:layout_weight="1"/>
+                  android:text="Date" android:layout_weight="1"/>
               <TextView
                   android:id="@+id/dname"
                   android:layout_width="match_parent"
@@ -60,7 +60,7 @@
               <TextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/father_name" android:layout_weight="1"/>
+                  android:text="Name" android:layout_weight="1"/>
               <TextView
                   android:id="@+id/dfather"
                   android:layout_width="match_parent"
@@ -83,7 +83,7 @@
               <TextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/year" android:layout_weight="1"/>
+                  android:text="Age" android:layout_weight="1"/>
               <TextView
                   android:id="@+id/dyear"
                   android:layout_width="match_parent"
@@ -107,7 +107,7 @@
               <TextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/grade" android:layout_weight="1"/>
+                  android:text="CNIC" android:layout_weight="1"/>
               <TextView
                   android:id="@+id/dgrade"
                   android:layout_width="match_parent"
@@ -130,7 +130,7 @@
               <TextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/sectiont" android:layout_weight="1"/>
+                  android:text="Email" android:layout_weight="1"/>
               <TextView
                   android:id="@+id/dsection"
                   android:layout_width="match_parent"
@@ -154,7 +154,7 @@
               <TextView
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:text="@string/grt" android:layout_weight="1"/>
+                  android:text="Designation" android:layout_weight="1"/>
               <TextView
                   android:id="@+id/dgr"
                   android:layout_width="match_parent"

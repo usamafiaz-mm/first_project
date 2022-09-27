@@ -10,22 +10,6 @@ import java.util.Date;
 @Entity(tableName = "user_data")
 
 public class RegData {
-    @Override
-    public String toString() {
-        return "RegData{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", cnic='" + cnic + '\'' +
-                ", designation='" + designation + '\'' +
-                ", university='" + university + '\'' +
-                ", company='" + company + '\'' +
-                ", dob=" + dob +
-                ", gender='" + gender + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -38,8 +22,43 @@ public class RegData {
     @ColumnInfo(name = "email")
     private String email;
 
+    @Override
+    public String toString() {
+        return "RegData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", cnic='" + cnic + '\'' +
+                ", designation='" + designation + '\'' +
+                ", university='" + university + '\'' +
+                ", company='" + company + '\'' +
+                ", profileImage='" + profileImage + '\'' +
+                ", coverImage='" + coverImage + '\'' +
+                ", dob=" + dob +
+                ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
+
     @ColumnInfo(name = "age")
     private  int age;
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
 
     @ColumnInfo(name = "cnic")
     private  String cnic;
@@ -52,6 +71,13 @@ public class RegData {
 
     @ColumnInfo(name = "company")
     private  String company;
+
+
+    @ColumnInfo(name = "profile_image")
+    private  String profileImage;
+
+    @ColumnInfo(name = "cover_image")
+    private  String coverImage;
 
     @ColumnInfo(name = "dob")
     private Date dob;

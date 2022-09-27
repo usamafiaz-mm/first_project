@@ -1,22 +1,35 @@
 package com.example.first_project.ui;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -31,24 +44,29 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.santalu.maskara.widget.MaskEditText;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 
 public class FormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    TextInputEditText email, name, university, company, age,userDOBView,firstNumber,secondNumber,result;
+    Dialog customDialog;
+    TextInputEditText email, name, university, company, age, userDOBView, firstNumber, secondNumber, result;
     TextInputLayout compLay, uniLay, userDOBViewLay;
-    EditText    line1, line2, line3, line4;
+    EditText line1, line2, line3, line4;
     Button addBtn, removeBtn, submitBtn;
     MaskEditText cnic;
     RadioGroup radioGroup;
     AutoCompleteTextView autoCompleteTextView;
+    ImageView profilePicture, coverPicture;
 
-    String nameData, emailData, designation;
+    String nameData, emailData, designation, profilePicturePath="", coverPicturePath="";
+
     Spinner spinner;
     int id;
 
@@ -79,6 +97,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         result = findViewById(R.id.rnum);
         name = findViewById(R.id.form_name);
         age = findViewById(R.id.form_age);
+
 //        age.setFilters(new InputFilter[]{ new InputFilterMinMax("18", "99")});
 
 
@@ -86,6 +105,69 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
         line4 = findViewById(R.id.line4);
+
+        coverPicture = findViewById(R.id.cover_picture);
+        profilePicture = findViewById(R.id.profile_picture);
+
+
+        profilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog = new Dialog(FormActivity.this);
+                customDialog.setContentView(R.layout.custom_dialog);
+                customDialog.show();
+                Button cameraBtn = (Button) customDialog.findViewById(R.id.camera_btn);
+                cameraBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(camera_intent, 100);
+                    }
+                });
+
+                Button galleryButton = customDialog.findViewById(R.id.gallery_btn);
+                galleryButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 101);
+                    }
+                });
+
+
+                customDialog.show();
+            }
+        });
+
+        coverPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog = new Dialog(FormActivity.this);
+                customDialog.setContentView(R.layout.custom_dialog);
+                customDialog.show();
+                Button cameraBtn = (Button) customDialog.findViewById(R.id.camera_btn);
+                cameraBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(camera_intent, 103);
+                    }
+                });
+
+                Button galleryButton = customDialog.findViewById(R.id.gallery_btn);
+                galleryButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 104);
+                    }
+                });
+
+
+                customDialog.show();
+            }
+        });
+
 
         addBtn = findViewById(R.id.add_btn);
         removeBtn = findViewById(R.id.rm_btn);
@@ -111,62 +193,68 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setOnItemSelectedListener(this);
 
 
-      try {
-           id = getIntent().getExtras().getInt("id");
-          System.out.println(id);
+        try {
+            id = getIntent().getExtras().getInt("id");
+            System.out.println(id);
 
-          Executors.newSingleThreadExecutor().execute(new Runnable() {
-              @Override
-              public void run() {
-                  RegData data = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().SearchById(id);
- runOnUiThread(new Runnable() {
-     @Override
-     public void run() {
-         shouldUpdate = true;
-         submitBtn.setText("Update");
-         email.setText(data.getEmail());
-         name.setText(data.getName());
-         age.setText(String.valueOf(data.getAge()));
-         cnic.setText(data.getCnic());
-         System.out.println(data.getDesignation());
-         System.out.println(data.getDesignation() =="Student"? 1:2);
+            Executors.newSingleThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    RegData data = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().SearchById(id);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            shouldUpdate = true;
+                            submitBtn.setText("Update");
+                            email.setText(data.getEmail());
+                            name.setText(data.getName());
+                            age.setText(String.valueOf(data.getAge()));
+                            cnic.setText(data.getCnic());
+                            System.out.println(data.getDesignation());
+                            System.out.println(data.getDesignation() == "Student" ? 1 : 2);
 
-         spinner.setSelection(adapter.getPosition(data.getDesignation()));
-         if(data.getDob() != null){
-             String pattern = "dd-MM-yyyy";
-             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-             String date = simpleDateFormat.format(data.getDob());
-             System.out.println(date);
+                            spinner.setSelection(adapter.getPosition(data.getDesignation()));
+                            if (data.getDob() != null) {
+                                String pattern = "dd-MM-yyyy";
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                                String date = simpleDateFormat.format(data.getDob());
+                                System.out.println(date);
 
-             userDOBView.setText(date.toString());
+                                userDOBView.setText(date.toString());
 
-         }
+                            }
 
-         if(!data.getCompany().equals(""))
-             company.setText(data.getCompany());
-         if(!data.getUniversity().equals(""))
-             university.setText(data.getUniversity());
-
-
-         if(data.getGender().toString().equals("Male")){
-             RadioButton rb = findViewById(R.id.male);
-             rb.setChecked(true);
-         }else{
-             RadioButton rb = findViewById(R.id.female);
-             rb.setChecked(true);
-         }
-
-     }
- });
-              }
-          });
+                            if (!data.getCompany().equals(""))
+                                company.setText(data.getCompany());
+                            if (!data.getUniversity().equals(""))
+                                university.setText(data.getUniversity());
 
 
-      }
-      catch (Exception e){
-          e.printStackTrace();
-      }
+                            if (data.getGender().toString().equals("Male")) {
+                                RadioButton rb = findViewById(R.id.male);
+                                rb.setChecked(true);
+                            } else {
+                                RadioButton rb = findViewById(R.id.female);
+                                rb.setChecked(true);
+                            }
 
+                            if(data.getCoverImage()!=null){
+                                coverPicture.setImageURI(Uri.parse(data.getCoverImage()));
+                            }
+
+                            if(data.getProfileImage()!=null){
+                                profilePicture.setImageURI(Uri.parse(data.getProfileImage()));
+                            }
+
+                        }
+                    });
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         radioGroup = findViewById(R.id.rgGender);
@@ -176,16 +264,15 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                 switch (checkedId) {
                     case R.id.male:
 
-                            genderEnum = Gender.Male;
+                        genderEnum = Gender.Male;
 
                         break;
                     case R.id.female:
-                            genderEnum = Gender.Female;
+                        genderEnum = Gender.Female;
                         break;
                 }
             }
         });
-
 
 
 //        ArrayAdapter<CharSequence> adt = ArrayAdapter.createFromResource(this,
@@ -225,7 +312,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-isDataValid = true;
+                isDataValid = true;
                 RegData regData = new RegData();
 
                 if (getName() != null)
@@ -247,8 +334,7 @@ isDataValid = true;
 
                 if (designationEnum != null) {
                     if (designationEnum == Designation.Student) {
-                        if (getUniversity() != null)
-                        {
+                        if (getUniversity() != null) {
                             regData.setUniversity(getUniversity());
                             regData.setCompany("");
                             regData.setDesignation("Student");
@@ -256,8 +342,7 @@ isDataValid = true;
 
                     }
                     if (designationEnum == Designation.Employee) {
-                        if (getCompany() != null)
-                        {
+                        if (getCompany() != null) {
                             regData.setCompany(getCompany());
                             regData.setUniversity("");
                             regData.setDesignation("Employee");
@@ -267,7 +352,7 @@ isDataValid = true;
 
                     }
                 } else {
-                    ((TextView)spinner.getSelectedView()).setError("Error message");
+                    ((TextView) spinner.getSelectedView()).setError("Error message");
                     isDataValid = false;
                 }
                 if (genderEnum == null) {
@@ -275,7 +360,7 @@ isDataValid = true;
                     radioButton.setError("Please select Gender");
                     isDataValid = false;
 
-                }else{
+                } else {
                     regData.setGender(genderEnum.toString());
                     RadioButton radioButton = findViewById(R.id.female);
                     radioButton.setError(null);
@@ -284,16 +369,16 @@ isDataValid = true;
                 System.out.println(userDOBView.getText());
                 String a = String.valueOf(userDOBView.getText());
 
-                if(String.valueOf(userDOBView.getText()).equals("")){
+                if (String.valueOf(userDOBView.getText()).equals("")) {
                     regData.setDob(null);
-                }else{
+                } else {
                     String tempDate = userDOBView.getText().toString();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
                     userDOBView.setError(null);
 
                     try {
-                      Date date =  simpleDateFormat.parse(tempDate);
-                      regData.setDob(date);
+                        Date date = simpleDateFormat.parse(tempDate);
+                        regData.setDob(date);
                         System.out.println(date.toString());
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -303,26 +388,36 @@ isDataValid = true;
 
                 String address = "";
 
-                for(int i = 0; i <=currentLines; i++) {
+                for (int i = 0; i <= currentLines; i++) {
                     String temp = texts[i].getText().toString();
 
 
                     address = address + " " + texts[i].getText().toString();
                 }
+
+                if(profilePicturePath.equals("")){
+                    new AlertDialog.Builder(getApplicationContext())
+                            .setTitle("Profile Picture is Requires")
+                            .setIcon(R.drawable.ic_baseline_error_24).show();
+                    isDataValid = false;
+                }else {
+                    regData.setProfileImage(profilePicturePath);
+                }
+                if(!coverPicturePath.equals(""))
+                    regData.setCoverImage(coverPicturePath);
                 regData.setAddress(address.trim());
                 System.out.println(address);
-if(isDataValid && shouldUpdate){
-    regData.setId(id);
-    Toast.makeText(FormActivity.this, "UPDATED", Toast.LENGTH_LONG).show();
-    System.out.println(regData.toString());
-    Executors.newSingleThreadExecutor().execute(new Runnable() {
-        @Override
-        public void run() {
-            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().updateRegData(regData);
-        }
-    });
-}
-                  else if(isDataValid){
+                if (isDataValid && shouldUpdate) {
+                    regData.setId(id);
+                    Toast.makeText(FormActivity.this, "UPDATED", Toast.LENGTH_LONG).show();
+                    System.out.println(regData.toString());
+                    Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().updateRegData(regData);
+                        }
+                    });
+                } else if (isDataValid) {
                     Toast.makeText(FormActivity.this, "Added to DB", Toast.LENGTH_LONG).show();
                     System.out.println(regData.toString());
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
@@ -348,8 +443,6 @@ if(isDataValid && shouldUpdate){
 
             }
         });
-
-
 
 
 //  private         String  getAddress(){
@@ -465,9 +558,6 @@ if(isDataValid && shouldUpdate){
                 handleCalc();
             }
         });
-
-
-
 
 
         email.addTextChangedListener(new TextWatcher() {
@@ -672,8 +762,87 @@ if(isDataValid && shouldUpdate){
     }
 
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Match the request 'pic id with requestCode
+        if (requestCode == 100) {
+
+            String filename = UUID.randomUUID().toString() + ".png";
+            String path = FormActivity.this.getFilesDir().getPath() + File.separator + "imageDir";
+            File f = new File(path);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            File dest = new File(path, filename);
+            Log.e("PATH", "onActivityResult: " + dest);
+
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            try {
+                FileOutputStream out = new FileOutputStream(dest);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+                out.close();
+                profilePicture.setImageURI(Uri.fromFile(dest));
+                profilePicturePath = dest.getAbsolutePath();
+                customDialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (requestCode == 101) {
+            Uri selectedImageUri = data.getData();
+            profilePicture.setImageURI(selectedImageUri);
+            coverPicturePath = getPath( getApplicationContext( ), selectedImageUri );
+            customDialog.dismiss();
+        } else if (requestCode == 103) {
+
+            String filename = UUID.randomUUID().toString() + ".png";
+            String path = FormActivity.this.getFilesDir().getPath() + File.separator + "imageDir";
+            File f = new File(path);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            File dest = new File(path, filename);
+            Log.e("PATH", "onActivityResult: " + dest);
+
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            try {
+                FileOutputStream out = new FileOutputStream(dest);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+                out.flush();
+                out.close();
+                coverPicture.setImageURI(Uri.fromFile(dest));
+                coverPicturePath = dest.getAbsolutePath();
+                customDialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else if (requestCode == 104) {
+            Uri selectedImageUri = data.getData();
 
 
+            coverPicture.setImageURI(selectedImageUri);
+            coverPicturePath = getPath( getApplicationContext( ), selectedImageUri );
+
+            customDialog.dismiss();
+        }
+    }
+    public static String getPath(Context context, Uri uri ) {
+        String result = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = context.getContentResolver( ).query( uri, proj, null, null, null );
+        if(cursor != null){
+            if ( cursor.moveToFirst( ) ) {
+                int column_index = cursor.getColumnIndexOrThrow( proj[0] );
+                result = cursor.getString( column_index );
+            }
+            cursor.close( );
+        }
+        if(result == null) {
+            result = "Not found";
+        }
+        return result;
+    }
 
 }
 
