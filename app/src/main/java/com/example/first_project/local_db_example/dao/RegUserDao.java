@@ -16,7 +16,7 @@ import java.util.Observable;
 public interface RegUserDao {
 
     @Insert
-    void insert(RegData regData);
+    Long insert(RegData regData);
 
     @Query("SELECT * FROM user_data order by age")
     LiveData<  List<RegData> > fetchALl();

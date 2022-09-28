@@ -86,6 +86,13 @@
         android:text="Image Demo"
         android:layout_gravity="center"
         />
+    <Button
+        android:id="@+id/fragmentDemo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Frgament Demo"
+        android:layout_gravity="center"
+        />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

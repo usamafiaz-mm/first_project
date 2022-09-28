@@ -406,7 +406,7 @@
 
                 />
 
-            <Space
+            <View
                 android:layout_width="10dp"
                 android:layout_height="0dp" />
 

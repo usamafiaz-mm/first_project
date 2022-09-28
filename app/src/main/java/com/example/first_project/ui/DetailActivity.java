@@ -32,23 +32,6 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
 
 
-//        int id = getIntent().getExtras().getInt("id");
-//        View parentLayout = findViewById(android.R.id.content);
-
-//        Snackbar.make(parentLayout, String.valueOf(gr), Snackbar.LENGTH_LONG).show();
-
-//        Student student = new Student();
-//        ArrayList students = new Constant().STUDENTS;
-
-
-//        Iterator iterator = students.iterator();
-//        while (iterator.hasNext()) {
-//            Student i = (Student) iterator.next();
-//            if (i.getGr() == gr) {
-//                student = i;
-//            }
-//
-//        }
 
         if ( getIntent().getExtras()!=null) {
 

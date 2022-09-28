@@ -1,26 +1,34 @@
-package com.example.first_project.ui;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.first_project.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.provider.MediaStore;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,7 +47,8 @@ import android.widget.Toast;
 import com.example.first_project.R;
 import com.example.first_project.local_db_example.database.DatabaseClient;
 import com.example.first_project.local_db_example.model.RegData;
-import com.example.first_project.local_db_example.util_classes.InputFilterMinMax;
+import com.example.first_project.ui.FormActivity;
+import com.example.first_project.ui.FragmentDemo;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.santalu.maskara.widget.MaskEditText;
@@ -54,7 +63,9 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 
-public class FormActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+public class FormFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+
     Dialog customDialog;
     TextInputEditText email, name, university, company, age, userDOBView, firstNumber, secondNumber, result;
     TextInputLayout compLay, uniLay, userDOBViewLay;
@@ -65,7 +76,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
     AutoCompleteTextView autoCompleteTextView;
     ImageView profilePicture, coverPicture;
 
-    String nameData, emailData, designation, profilePicturePath="", coverPicturePath="";
+    String nameData, emailData, designation, profilePicturePath = "", coverPicturePath = "";
 
     Spinner spinner;
     int id;
@@ -81,100 +92,64 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
     boolean shouldUpdate = false;
 
 
+    public FormFragment() {
+        // Required empty public constructor
+    }
+
+
+    // TODO: Rename and change types and number of parameters
+    public static FormFragment newInstance(String param1, String param2) {
+        FormFragment fragment = new FormFragment();
+        Bundle args = new Bundle();
+
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form);
-        email = findViewById(R.id.form_email);
-        university = findViewById(R.id.form_uni);
-        company = findViewById(R.id.form_comap);
-        compLay = findViewById(R.id.companyLay);
-        uniLay = findViewById(R.id.uni_lay);
-        firstNumber = findViewById(R.id.fnum);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_form, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        email = view.findViewById(R.id.form_email);
+        university = view.findViewById(R.id.form_uni);
+        company = view.findViewById(R.id.form_comap);
+        compLay = view.findViewById(R.id.companyLay);
+        uniLay = view.findViewById(R.id.uni_lay);
+        firstNumber = view.findViewById(R.id.fnum);
 //        firstNumber.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "99999")});
-        secondNumber = findViewById(R.id.snum);
+        secondNumber = view.findViewById(R.id.snum);
 //        secondNumber.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "99999")});
-        result = findViewById(R.id.rnum);
-        name = findViewById(R.id.form_name);
-        age = findViewById(R.id.form_age);
+        result = view.findViewById(R.id.rnum);
+        name = view.findViewById(R.id.form_name);
+        age = view.findViewById(R.id.form_age);
 
 //        age.setFilters(new InputFilter[]{ new InputFilterMinMax("18", "99")});
 
 
-        line1 = findViewById(R.id.line1);
-        line2 = findViewById(R.id.line2);
-        line3 = findViewById(R.id.line3);
-        line4 = findViewById(R.id.line4);
+        line1 = view.findViewById(R.id.line1);
+        line2 = view.findViewById(R.id.line2);
+        line3 = view.findViewById(R.id.line3);
+        line4 = view.findViewById(R.id.line4);
 
-        coverPicture = findViewById(R.id.cover_picture);
-        profilePicture = findViewById(R.id.profile_picture);
-
-
-        profilePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog = new Dialog(FormActivity.this);
-                customDialog.setContentView(R.layout.custom_dialog);
-                customDialog.show();
-                Button cameraBtn = (Button) customDialog.findViewById(R.id.camera_btn);
-                cameraBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(camera_intent, 100);
-                    }
-                });
-
-                Button galleryButton = customDialog.findViewById(R.id.gallery_btn);
-                galleryButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(intent, 101);
-                    }
-                });
-
-
-                customDialog.show();
-            }
-        });
-
-        coverPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog = new Dialog(FormActivity.this);
-                customDialog.setContentView(R.layout.custom_dialog);
-                customDialog.show();
-                Button cameraBtn = (Button) customDialog.findViewById(R.id.camera_btn);
-                cameraBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(camera_intent, 103);
-                    }
-                });
-
-                Button galleryButton = customDialog.findViewById(R.id.gallery_btn);
-                galleryButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        startActivityForResult(intent, 104);
-                    }
-                });
-
-
-                customDialog.show();
-            }
-        });
-
-
-        addBtn = findViewById(R.id.add_btn);
-        removeBtn = findViewById(R.id.rm_btn);
-        submitBtn = findViewById(R.id.submit_btn);
-        cnic = findViewById(R.id.form_cnic);
+        coverPicture = view.findViewById(R.id.cover_picture);
+        profilePicture = view.findViewById(R.id.profile_picture);
+        addBtn = view.findViewById(R.id.add_btn);
+        removeBtn = view.findViewById(R.id.rm_btn);
+        submitBtn = view.findViewById(R.id.submit_btn);
+        cnic = view.findViewById(R.id.form_cnic);
 //        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
-        spinner = findViewById(R.id.form_dsn);
+        spinner = view.findViewById(R.id.form_dsn);
         EditText[] texts = {line1, line2, line3, line4};
 
         ArrayList dsn = new ArrayList();
@@ -184,7 +159,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
 // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this,
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getActivity(),
                 android.R.layout.simple_spinner_item, dsn);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -193,15 +168,16 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setOnItemSelectedListener(this);
 
 
-        try {
-            id = getIntent().getExtras().getInt("id");
-            System.out.println(id);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            int id = bundle.getInt("id", 1);
+            Log.d("TAG", "onViewCreated: " + id);
 
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
-                    RegData data = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().SearchById(id);
-                    runOnUiThread(new Runnable() {
+                    RegData data = DatabaseClient.getInstance(getActivity().getApplicationContext()).getAppDatabase().regUserDao().SearchById(id);
+                    getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             shouldUpdate = true;
@@ -231,18 +207,18 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
                             if (data.getGender().toString().equals("Male")) {
-                                RadioButton rb = findViewById(R.id.male);
+                                RadioButton rb = view.findViewById(R.id.male);
                                 rb.setChecked(true);
                             } else {
-                                RadioButton rb = findViewById(R.id.female);
+                                RadioButton rb = view.findViewById(R.id.female);
                                 rb.setChecked(true);
                             }
 
-                            if(data.getCoverImage()!=null){
+                            if (data.getCoverImage() != null) {
                                 coverPicture.setImageURI(Uri.parse(data.getCoverImage()));
                             }
 
-                            if(data.getProfileImage()!=null){
+                            if (data.getProfileImage() != null) {
                                 profilePicture.setImageURI(Uri.parse(data.getProfileImage()));
                             }
 
@@ -250,14 +226,69 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                     });
                 }
             });
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
 
-        radioGroup = findViewById(R.id.rgGender);
+        profilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog = new Dialog(getActivity());
+                customDialog.setContentView(R.layout.custom_dialog);
+                customDialog.show();
+                Button cameraBtn = (Button) customDialog.findViewById(R.id.camera_btn);
+                cameraBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(camera_intent, 100);
+                    }
+                });
+
+                Button galleryButton = customDialog.findViewById(R.id.gallery_btn);
+                galleryButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 101);
+                    }
+                });
+
+
+                customDialog.show();
+            }
+        });
+
+        coverPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customDialog = new Dialog(getActivity());
+                customDialog.setContentView(R.layout.custom_dialog);
+                customDialog.show();
+                Button cameraBtn = (Button) customDialog.findViewById(R.id.camera_btn);
+                cameraBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(camera_intent, 103);
+                    }
+                });
+
+                Button galleryButton = customDialog.findViewById(R.id.gallery_btn);
+                galleryButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, 104);
+                    }
+                });
+
+
+                customDialog.show();
+            }
+        });
+
+
+        radioGroup = view.findViewById(R.id.rgGender);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -273,40 +304,6 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         });
-
-
-//        ArrayAdapter<CharSequence> adt = ArrayAdapter.createFromResource(this,
-//                R.array.design, R.layout.list_item);
-//        autoCompleteTextView.setAdapter(adt);
-//        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                switch (position) {
-//                    case 0:
-//                        System.out.println("Student");
-//                        designation = "student";
-//
-//                        uniLay.setVisibility(View.VISIBLE);
-//                        compLay.setVisibility(View.GONE);
-//                        university.setVisibility(View.VISIBLE);
-//                        company.setVisibility(View.GONE);
-//                        designationEnum = Designation.Student;
-//                        break;
-//                    case 1:
-//                        company.setVisibility(View.VISIBLE);
-//                        compLay.setVisibility(View.VISIBLE);
-//                        uniLay.setVisibility(View.GONE);
-//                        university.setVisibility(View.GONE);
-//                        designation = "employee";
-//                        designationEnum = Designation.Employee;
-//
-//
-//
-//                        System.out.println("Employee");
-//                        break;
-//
-//                }            }
-//        });
 
 
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -347,7 +344,6 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                             regData.setUniversity("");
                             regData.setDesignation("Employee");
 
-
                         }
 
                     }
@@ -356,13 +352,13 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                     isDataValid = false;
                 }
                 if (genderEnum == null) {
-                    RadioButton radioButton = findViewById(R.id.female);
+                    RadioButton radioButton = view.findViewById(R.id.female);
                     radioButton.setError("Please select Gender");
                     isDataValid = false;
 
                 } else {
                     regData.setGender(genderEnum.toString());
-                    RadioButton radioButton = findViewById(R.id.female);
+                    RadioButton radioButton = view.findViewById(R.id.female);
                     radioButton.setError(null);
                 }
 
@@ -395,77 +391,51 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                     address = address + " " + texts[i].getText().toString();
                 }
 
-                if(profilePicturePath.equals("")){
-                    new AlertDialog.Builder(getApplicationContext())
+                if (profilePicturePath.equals("")) {
+                    Log.e("TAG", "onClick: " + regData);
+                    new AlertDialog.Builder(getActivity().getApplicationContext())
                             .setTitle("Profile Picture is Requires")
-                            .setIcon(R.drawable.ic_baseline_error_24).show();
+                            .show();
                     isDataValid = false;
-                }else {
+                } else {
                     regData.setProfileImage(profilePicturePath);
                 }
-                if(!coverPicturePath.equals(""))
+                if (!coverPicturePath.equals(""))
                     regData.setCoverImage(coverPicturePath);
                 regData.setAddress(address.trim());
                 System.out.println(address);
                 if (isDataValid && shouldUpdate) {
                     regData.setId(id);
-                    Toast.makeText(FormActivity.this, "UPDATED", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "UPDATED", Toast.LENGTH_LONG).show();
                     System.out.println(regData.toString());
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
                         @Override
                         public void run() {
-                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().updateRegData(regData);
+                            DatabaseClient.getInstance(getActivity().getApplicationContext()).getAppDatabase().regUserDao().updateRegData(regData);
                         }
                     });
                 } else if (isDataValid) {
-                    Toast.makeText(FormActivity.this, "Added to DB", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Added to DB", Toast.LENGTH_LONG).show();
                     System.out.println(regData.toString());
                     Executors.newSingleThreadExecutor().execute(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void run() {
-                            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().regUserDao().insert(regData);
+                            Long id = DatabaseClient.getInstance(getActivity().getApplicationContext()).getAppDatabase().regUserDao().insert(regData);
+                            FragmentManager fragmentManager2 = getParentFragmentManager();
+                            FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
+                            DetailFragment detailFragment = new DetailFragment();
+                            Bundle args = new Bundle();
+                            args.putInt("id", Math.toIntExact(id));
+                            detailFragment.setArguments(args);
+                            fragmentTransaction2.hide(FormFragment.this);
+                            fragmentTransaction2.add(R.id.frameLayout, detailFragment);
+                            fragmentTransaction2.commit();
                         }
                     });
                 }
-
-//                regData.setDesignation(designation);
-
-//                if(designation.equals("student")){
-//                    if(getUniversity() != null)
-//                        regData.setUniversity(getUniversity());
-//                }
-
-//                if(designation.equals("employee")){
-//                    if(getCompany() != null)
-//                        regData.setCompany(getUniversity());
-//                }
-
-
             }
         });
-
-
-//  private         String  getAddress(){
-//            String address = "";
-//
-//            for(int i = 0; i <=currentLines; i++){
-//                String temp = texts[i].getText().toString();
-//                if(temp.equals("")){
-//                    texts[i].setError("Enter address");
-//                    continue;
-//                }
-//
-//                address = address + " " + texts[i].getText().toString();
-//
-//
-//
-//
-//            }
-//
-//            return address;
-//
-//
-//        }
 
 
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -498,7 +468,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
-        userDOBView = findViewById(R.id.etDOB);
+        userDOBView = view.findViewById(R.id.etDOB);
 
         userDOBView.setOnClickListener(new View.OnClickListener() {
                                            @Override
@@ -509,7 +479,7 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                                                int mMonth = c.get(Calendar.MONTH); // current month
                                                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                                                // date picker dialog
-                                               DatePickerDialog datePickerDialog = new DatePickerDialog(FormActivity.this,
+                                               DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                                                        new DatePickerDialog.OnDateSetListener() {
 
                                                            @Override
@@ -583,12 +553,9 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
                 emailData = target.toString();
             }
         });
-
-
     }
 
 
-    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 1:
@@ -647,7 +614,6 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         if (currentLines >= 3) {
             addBtn.setBackgroundColor(Color.parseColor("#808080"));
 
-
         } else {
             addBtn.setBackgroundColor(Color.parseColor("#17871C"));
 
@@ -656,7 +622,6 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if (currentLines <= 1) {
             removeBtn.setBackgroundColor(Color.parseColor("#808080"));
-
 
         } else {
             removeBtn.setBackgroundColor(Color.parseColor("#EC0A0A"));
@@ -735,23 +700,13 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
-    enum Designation {
-        Student, Employee
-    }
-
-    enum Gender {
-        Male, Female
-    }
-
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Match the request 'pic id with requestCode
         if (requestCode == 100) {
 
             String filename = UUID.randomUUID().toString() + ".png";
-            String path = FormActivity.this.getFilesDir().getPath() + File.separator + "imageDir";
+            String path = getActivity().getFilesDir().getPath() + File.separator + "imageDir";
             File f = new File(path);
             if (!f.exists()) {
                 f.mkdirs();
@@ -774,12 +729,12 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
         } else if (requestCode == 101) {
             Uri selectedImageUri = data.getData();
             profilePicture.setImageURI(selectedImageUri);
-            coverPicturePath = getPath( getApplicationContext( ), selectedImageUri );
+            profilePicturePath = getPath(getActivity().getApplicationContext(), selectedImageUri);
             customDialog.dismiss();
         } else if (requestCode == 103) {
 
             String filename = UUID.randomUUID().toString() + ".png";
-            String path = FormActivity.this.getFilesDir().getPath() + File.separator + "imageDir";
+            String path = getActivity().getFilesDir().getPath() + File.separator + "imageDir";
             File f = new File(path);
             if (!f.exists()) {
                 f.mkdirs();
@@ -805,27 +760,44 @@ public class FormActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
             coverPicture.setImageURI(selectedImageUri);
-            coverPicturePath = getPath( getApplicationContext( ), selectedImageUri );
+            coverPicturePath = getPath(getActivity().getApplicationContext(), selectedImageUri);
 
             customDialog.dismiss();
         }
     }
-    public static String getPath(Context context, Uri uri ) {
+
+    public String getPath(Context context, Uri uri) {
         String result = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = context.getContentResolver( ).query( uri, proj, null, null, null );
-        if(cursor != null){
-            if ( cursor.moveToFirst( ) ) {
-                int column_index = cursor.getColumnIndexOrThrow( proj[0] );
-                result = cursor.getString( column_index );
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
+                result = cursor.getString(column_index);
             }
-            cursor.close( );
+            cursor.close();
         }
-        if(result == null) {
+        if (result == null) {
             result = "Not found";
         }
         return result;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        ((FragmentDemo) getActivity())
+                .setActionBarTitle("Form Fragment");
+    }
+
 }
 
+enum Designation {
+    Student, Employee
+}
+
+enum Gender {
+    Male, Female
+}

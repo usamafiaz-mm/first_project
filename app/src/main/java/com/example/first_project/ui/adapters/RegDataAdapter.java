@@ -21,6 +21,7 @@ import com.example.first_project.local_db_example.model.RegData;
 import com.example.first_project.ui.DetailActivity;
 import com.example.first_project.ui.FormActivity;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -40,8 +41,6 @@ public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHold
         View listItem = layoutInflater.inflate(R.layout.student_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(listItem);
         return viewHolder;
-
-
     }
 
 
@@ -107,6 +106,28 @@ public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHold
                                     @Override
                                     public void run() {
                                         DatabaseClient.getInstance(view.getContext()).getAppDatabase().regUserDao().deleteById(regData.getId());
+                                        File profilePic = new File(regData.getProfileImage());
+                                        File coverPic = new File(regData.getCoverImage());
+                                      try{
+                                          if (profilePic.exists()) {
+                                              if (profilePic.delete()) {
+//                                                  System.out.println("file Deleted :" + regData.getProfileImage());
+                                              } else {
+//                                                  System.out.println("file not Deleted :" + regData.getProfileImage());
+                                              }
+                                          }
+                                      }catch(Exception e){
+                                          e.printStackTrace();
+                                      }
+
+
+                                        if (coverPic.exists()) {
+                                            if (coverPic.delete()) {
+//                                                System.out.println("file Deleted :" + regData.getCoverImage());
+                                            } else {
+//                                                System.out.println("file not Deleted :" + regData.getCoverImage());
+                                            }
+                                        }
                                     }
                                 });
 
@@ -146,6 +167,4 @@ public class RegDataAdapter extends RecyclerView.Adapter<RegDataAdapter.ViewHold
             detail = itemView.findViewById(R.id.detail_iv);
         }
     }
-
-
 }

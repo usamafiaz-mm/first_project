@@ -12,7 +12,7 @@ import com.example.first_project.R;
 
 public class MainActivity extends AppCompatActivity {
     Button timeOutButton, interceptButton,uiButton, postReqButton,getDemoButton, localDbDemoInsert,localDbDemoFetch, notesButton,
-    formDemoActivity, imageDemoActivity;
+    formDemoActivity, imageDemoActivity,fragmentActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,17 @@ public class MainActivity extends AppCompatActivity {
         notesButton = findViewById(R.id.notesApp);
         formDemoActivity = findViewById(R.id.formDemo);
         imageDemoActivity = findViewById(R.id.imageDemo);
+        fragmentActivity = findViewById(R.id.fragmentDemo);
+
+
+        fragmentActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FragmentDemo.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         imageDemoActivity.setOnClickListener(new View.OnClickListener() {
